@@ -9,6 +9,7 @@ import MyPage from "../page/MyPage";
 // react-navigation-tabs这个插件是react-navigation这个插件依赖的一个插件 所以不需要再次安装
 import { BottomTabBar } from "react-navigation-tabs";
 
+import { connect } from "react-redux";
 const TABS = {
   //在这里配置页面的路由
 
@@ -102,20 +103,16 @@ class TabBarComponent extends React.Component {
   }
 
   render() {
-    const { routes, index } = this.props.navigation.state;
-    if (routes[index].params) {
-      const { theme } = routes[index].params;
-      if (theme && theme.updateTime > this.theme.updateTime) {
-        this.theme = theme;
-      }
-    }
-    return (
-      <BottomTabBar
-        {...this.props}
-        activeTintColor={this.theme.tintColor || this.props.activeTintColor}
-      />
-    );
+    // const { routes, index } = this.props.navigation.state;
+    // if (routes[index].params) {
+    //   const { theme } = routes[index].params;
+    //   if (theme && theme.updateTime > this.theme.updateTime) {
+    //     this.theme = theme;
+    //   }
+    // }
+    return <BottomTabBar {...this.props} activeTintColor={this.props.theme} />;
   }
 }
 
-export default DynamicTabNavigator;
+const mapStateToProps = state => ({ theme: state.theme.theme });
+export default connect(mapStateToProps)(DynamicTabNavigator);

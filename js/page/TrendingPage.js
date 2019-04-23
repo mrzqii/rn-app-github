@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 import { View, Text, Button } from "react-native";
-
-export default class TrendingPage extends Component {
+import { connect } from "react-redux";
+import { onThemeChange } from "../action/theme";
+class TrendingPage extends Component {
   constructor(props) {
     super(props);
     this.state = {};
@@ -21,15 +22,25 @@ export default class TrendingPage extends Component {
         <Button
           title="改变主题色"
           onPress={() => {
-            navigation.setParams({
-              theme: {
-                tintColor: "red",
-                updateTime: new Date().getTime()
-              }
-            });
+            // navigation.setParams({
+            //   theme: {
+            //     tintColor: "red",
+            //     updateTime: new Date().getTime()
+            //   }
+            // });
+            this.props.onThemeChange("#096");
           }}
         />
       </View>
     );
   }
 }
+
+const mapStateToProps = state => ({});
+const mapDispatchToProps = dispatch => ({
+  onThemeChange: theme => dispatch(onThemeChange(theme))
+});
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(TrendingPage);
