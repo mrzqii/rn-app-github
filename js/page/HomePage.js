@@ -1,24 +1,42 @@
 import React, { Component } from "react";
-import { View, Text, Image } from "react-native";
+import { View, Text, Image, BackHandler } from "react-native";
 import PopularPage from "../page/PopularPage";
 import TrendingPage from "../page/TrendingPage";
 import FavoritePage from "../page/FavoritePage";
 import MyPage from "./MyPage";
 import NavigationUtil from "../navigator/NavigationUtil";
 import { createBottomTabNavigator, createAppContainer } from "react-navigation";
+import { NavigationActions } from "react-navigation";
+import { connect } from "react-redux";
 // 字体使用 显示不正确 还需要额外的配置
 // https://segmentfault.com/q/1010000012524890
-import MaterialIcons from "react-native-vector-icons/MaterialIcons";
-import Ionicons from "react-native-vector-icons/Ionicons";
-import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
-import Entypo from "react-native-vector-icons/Entypo";
+// import MaterialIcons from "react-native-vector-icons/MaterialIcons";
+// import Ionicons from "react-native-vector-icons/Ionicons";
+// import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+// import Entypo from "react-native-vector-icons/Entypo";
 
 import DynamicTabNavigator from "../navigator/DynamicTabNavigator";
-export default class HomePage extends Component {
+class HomePage extends Component {
   constructor(props) {
     super(props);
     this.state = {};
   }
+  componentDidMount = () => {
+    BackHandler.addEventListener("hardwareBackPress", this.onBackPress);
+  };
+  componentWillUnmount() {
+    BackHandler.removeEventListener("hardwareBackPress", this.onBackPress);
+  }
+  onBackPress = () => {
+    const { dispatch, nav } = this.props;
+    //如果RootNavigator中的MainNavigator的index为0，则不处理返回事件
+    if (nav.routes[1].index === 0) {
+      return false; // 表示退出应用
+    }
+    dispatch(NavigationActions.back());
+    return true;
+  };
+
   _tabNavigation() {
     return createBottomTabNavigator(
       {
@@ -87,3 +105,9 @@ export default class HomePage extends Component {
     // return <Tab />;
   }
 }
+
+const mapStateToProps = state => ({
+  nav: state.nav
+});
+
+export default connect(mapStateToProps)(HomePage);

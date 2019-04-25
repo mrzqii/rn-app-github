@@ -70,9 +70,10 @@ class DynamicTabNavigator extends Component<Props> {
   }
 
   _tabNavigator() {
-    // if (this.Tabs) {
-    //   return this.Tabs;
-    // }
+    // 这里我们第一次运行的时候把这个tab保存起来 避免每次切换主题的时候会重新render函数 是tab回到第一个
+    if (this.Tabs) {
+      return this.Tabs;
+    }
     const { PopularPage, TrendingPage, FavoritePage, MyPage } = TABS;
     // 这里比如有什么权限控制之类的需求 我们可以根据条件来显示需要加载的页面
     const tabs = { PopularPage, TrendingPage, FavoritePage, MyPage }; //根据需要定制显示的tab
