@@ -80,6 +80,14 @@ const PopularTab = ({ tabLabel }) => {
         {tabLabel}
         跳转到详情页
       </Text>
+      <Text
+        onPress={() => {
+          NavigationUtil.goPage({}, "DataStoreDemoPage");
+        }}
+      >
+        {tabLabel}
+        跳转到DataStoreDemoPage
+      </Text>
     </View>
   );
 };

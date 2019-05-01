@@ -6,6 +6,7 @@ import {
 import WelcomePage from "../page/WelcomePage";
 import HomePage from "../page/HomePage";
 import DetailPage from "../page/DetailPage";
+import DataStoreDemoPage from "../page/DataStoreDemoPage";
 
 import { connect } from "react-redux";
 import {
@@ -37,6 +38,9 @@ const MainNavigator = createStackNavigator(
       // navigationOptions: {
       //   header: null // 可以通过将header设为null 来禁用StackNavigator的Navigation Bar
       // }
+    },
+    DataStoreDemoPage: {
+      screen: DataStoreDemoPage
     }
   },
   {
